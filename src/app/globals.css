@@ -1,26 +1,131 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ─── Design System: The Digital Curator ─────────────────────────── */
+@theme {
+  /* Fonts */
+  --font-headline: 'Noto Serif', Georgia, serif;
+  --font-body:     'Inter', system-ui, sans-serif;
+  --font-label:    'Inter', system-ui, sans-serif;
+  --font-sans:     'Inter', system-ui, sans-serif;
+
+  /* Full Material You token palette from Stitch */
+  --color-primary:                   #003c73;
+  --color-primary-container:         #00539c;
+  --color-primary-fixed:             #d5e3ff;
+  --color-primary-fixed-dim:         #a6c8ff;
+  --color-on-primary:                #ffffff;
+  --color-on-primary-container:      #a7c8ff;
+  --color-on-primary-fixed:          #001c3b;
+  --color-on-primary-fixed-variant:  #004787;
+  --color-inverse-primary:           #a6c8ff;
+
+  --color-secondary:                 #006971;
+  --color-secondary-container:       #98f1fa;
+  --color-secondary-fixed:           #98f1fa;
+  --color-secondary-fixed-dim:       #7cd4de;
+  --color-on-secondary:              #ffffff;
+  --color-on-secondary-container:    #006f78;
+  --color-on-secondary-fixed:        #002023;
+  --color-on-secondary-fixed-variant:#004f55;
+
+  --color-tertiary:                  #6f2100;
+  --color-tertiary-container:        #953102;
+  --color-tertiary-fixed:            #ffdbcf;
+  --color-tertiary-fixed-dim:        #ffb59b;
+  --color-on-tertiary:               #ffffff;
+  --color-on-tertiary-container:     #ffb59c;
+  --color-on-tertiary-fixed:         #380d00;
+  --color-on-tertiary-fixed-variant: #812800;
+
+  --color-background:                #faf8ff;
+  --color-surface:                   #faf8ff;
+  --color-surface-dim:               #d9d9e2;
+  --color-surface-bright:            #faf8ff;
+  --color-surface-container-lowest:  #ffffff;
+  --color-surface-container-low:     #f3f3fc;
+  --color-surface-container:         #ededf6;
+  --color-surface-container-high:    #e7e7f0;
+  --color-surface-container-highest: #e2e2ea;
+  --color-surface-tint:              #1c5fa8;
+  --color-surface-variant:           #e2e2ea;
+  --color-inverse-surface:           #2e3037;
+  --color-inverse-on-surface:        #f0f0f9;
+
+  --color-on-background:             #191b21;
+  --color-on-surface:                #191b21;
+  --color-on-surface-variant:        #424751;
+  --color-outline:                   #727782;
+  --color-outline-variant:           #c2c6d3;
+
+  --color-error:                     #ba1a1a;
+  --color-error-container:           #ffdad6;
+  --color-on-error:                  #ffffff;
+  --color-on-error-container:        #93000a;
+
+  /* Border radii matching Stitch ROUND_FOUR */
+  --radius-DEFAULT: 0.125rem;
+  --radius-lg:      0.25rem;
+  --radius-xl:      0.5rem;
+  --radius-full:    0.75rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ─── Base ────────────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-on-surface);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ─── Material Symbols ────────────────────────────────────────────── */
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+/* ─── Scrollytelling timeline ─────────────────────────────────────── */
+.timeline-connector {
+  position: absolute;
+  left: 2.5rem;
+  width: 1px;
+  background: linear-gradient(to bottom, #1c5fa8 0%, #1c5fa8 90%, transparent 100%);
+  height: 100%;
+  z-index: 0;
+}
+
+.branch-line {
+  position: absolute;
+  background: linear-gradient(to right, #1c5fa8 0%, #1c5fa8 90%, transparent 100%);
+  z-index: 0;
+}
+
+/* ─── Chord diagram ───────────────────────────────────────────────── */
+#chord-container {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.chord-ribbon {
+  transition: opacity 0.3s ease;
+}
+
+.chord-ribbon:hover {
+  opacity: 1 !important;
+}
+
+.chord-group {
+  cursor: pointer;
+}
+
+/* ─── Scrollbar hide ──────────────────────────────────────────────── */
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
