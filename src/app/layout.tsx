@@ -30,10 +30,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${notoSerif.variable} h-full`}>
       <head>
-        {/* Material Symbols for icons used throughout the portfolio */}
+        {/* Material Symbols — icon font, cannot use next/font/google */}
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=optional"
         />
       </head>
       <body className="min-h-full flex flex-col">{children}</body>
