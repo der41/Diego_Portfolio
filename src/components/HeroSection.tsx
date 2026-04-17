@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function HeroSection() {
   return (
     <>
@@ -8,9 +10,17 @@ export default function HeroSection() {
       >
         {/* Profile image */}
         <div className="relative mb-10">
-          <div className="w-40 h-40 rounded-[50%] overflow-hidden border-4 border-white shadow-2xl bg-[#ededf6] flex items-center justify-center">
-            {/* Replace src with real profile image */}
-            <span className="font-['Noto_Serif'] text-4xl font-bold text-[#003c73]">DR</span>
+          <div className="w-40 h-40 rounded-[50%] overflow-hidden border-4 border-white shadow-2xl bg-[#ededf6]">
+            <Image
+              src="/images/Profile.jpg"
+              alt="Diego Rodriguez"
+              width={320}
+              height={320}
+              sizes="160px"
+              quality={95}
+              priority
+              className="w-full h-full object-cover object-[50%_10%]"
+            />
           </div>
         </div>
 

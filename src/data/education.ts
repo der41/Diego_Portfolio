@@ -2,24 +2,58 @@ export interface EducationItem {
   id: string;
   label: string;
   title: string;
-  institution?: string;
-  body: string;
+  institution: string;
+  dates?: string;
+  formation?: string;
+  bullets: string[];
   imageUrl?: string;
 }
 
 export const education: EducationItem[] = [
   {
-    id: "duke-main",
-    label: "Academic Foundation",
-    title: "The Theory of Systems",
+    id: "duke-ms",
+    label: "Graduate Degree",
+    title: "Master of Science — Data Science",
     institution: "Duke University",
-    body: "Specializing in the intersection of Economics and Statistics, developing the mathematical frameworks necessary for complex system analysis.",
-    imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuBASz27XusrJBEELQm4eV409WT9fTZqTAoKtDuw66N3sUZXWuFmvJbi9HGi-b76rm-2lxQOmVno_eY_cTk2vdf69DK24VUgJ77MYsEvYzwJFFB8G9bQJ9626J_oTG6_1PU6MbTtWqygDV58Grij3XoE02qa0k9rUrbdEF9RSkxDOFExBmQJt4i3z6mv9MNLaddKn6_6dBrlRBWWvku38dqrTQNomUM0e1AYIyD62NqkHY3D-D4tSOX5GQ8QEYDhhiM_fRW20xbKy3Om",
+    dates: "2024–2026",
+    formation:
+      "Principles of Machine Learning, Causal Inference, Database Systems, Explainable AI, Data Engineering, Natural Language Processing, and Deep Learning.",
+    bullets: [
+      "Developed projects at the intersection of financial markets, NLP, data engineering, explainability, and visualization.",
+      "Pushed causal inference research into UX design and big-data analysis.",
+      "Teaching Assistant for Practical Data Science — guiding students through Python analytical pipelines.",
+      "Teaching Assistant for Solving Problems with Data — helping students translate business challenges into data solutions.",
+      "Research Assistant at the Behavioral Lab — collaborating on A/B tests to change behavior in the debt payment industry.",
+    ],
+    imageUrl: "/images/Duke.png",
   },
   {
-    id: "duke-data-plus",
-    label: "Duke Data+",
-    title: "Research Assistant",
-    body: "Applying Behavioral Science frameworks to data-driven research projects through Duke's Data+ program.",
+    id: "mit-data-analytics",
+    label: "Certificate",
+    title: "Data Analytics",
+    institution: "Massachusetts Institute of Technology",
+    dates: "2019–2020",
+    formation:
+      "Project Management, Knowledge Discovery in Data, and Data Analytics Process.",
+    bullets: [
+      "Certificate focused on leading data-related projects through a combination of classes and industry case studies.",
+      "Applied methodologies for solving complex industry problems: CRISP-DM, KDD, and the Double Diamond Process.",
+      "Framed data initiatives around business value, stakeholder alignment, and delivery discipline.",
+    ],
+    imageUrl: "/images/MIT.png",
+  },
+  {
+    id: "uchile-undergrad",
+    label: "Undergraduate Degree",
+    title: "Bachelor's — Management and Economics",
+    institution: "Universidad de Chile",
+    dates: "2014–2018",
+    formation:
+      "Statistics, Econometrics, Forecasting, Economics, Marketing, and Product Analytics.",
+    bullets: [
+      "Worked on social-impact projects promoting research and science at the secondary-education level.",
+      "Estimated health expenditure savings from incentivizing physical activity across the population.",
+      "Profiled risk aversion by analyzing gambling and lottery behavior among Chilean households.",
+    ],
   },
 ];
