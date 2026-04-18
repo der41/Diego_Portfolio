@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio — Diego Rodriguez
 
-## Getting Started
+An interactive, scrollytelling personal portfolio built with Next.js, TypeScript, Tailwind CSS v4, D3, and GSAP. The page uses a pinned D3 chord diagram tied to a scroll-driven timeline: as each About / Education / Experience card enters the viewport, the relevant disciplines in the chord diagram highlight, connecting the narrative to the visualization.
 
-First, run the development server:
+## Stack
+
+- **Framework:** Next.js 16 (App Router) + React 19
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS v4
+- **Visualization:** D3 (chord diagram) + GSAP / ScrollTrigger (scroll animation)
+- **Tooling:** ESLint, Vitest + Testing Library, jsdom
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Start the Next.js dev server |
+| `npm run build` | Production build |
+| `npm run start` | Run the built app |
+| `npm run lint` | ESLint over `src/` |
+| `npm run type-check` | `tsc --noEmit` |
+| `npm run test` | Run Vitest once |
+| `npm run test:watch` | Vitest in watch mode |
+| `npm run test:coverage` | Coverage report |
 
-## Learn More
+## Repo structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+portfolio-app/
+├── public/
+│   ├── images/                  # Portrait + institution logos (Duke, MIT, …)
+│   └── *.svg                    # Default Next.js iconography
+├── src/
+│   ├── app/
+│   │   ├── layout.tsx           # Root layout, fonts, Material Symbols
+│   │   ├── page.tsx             # Page composition
+│   │   └── globals.css          # Tailwind + global styles
+│   ├── components/
+│   │   ├── HeroSection.tsx      # Landing hero
+│   │   ├── Navigation.tsx       # Top nav with section anchors
+│   │   ├── ScrollytellingLayout.tsx  # Main timeline + chord diagram
+│   │   ├── ContactSection.tsx   # Contact block
+│   │   ├── Footer.tsx
+│   │   ├── ui/                  # Shared presentational primitives
+│   │   └── __tests__/           # Component unit tests
+│   ├── data/
+│   │   ├── about.ts             # About-section cards
+│   │   ├── education.ts         # Education timeline entries
+│   │   ├── experience.ts        # Work-experience timeline entries
+│   │   ├── projects.ts          # Featured projects
+│   │   └── disciplines.ts       # Discipline metadata used by the chord diagram
+│   └── test/
+│       └── setup.ts             # Vitest + Testing Library setup
+├── eslint.config.mjs
+├── next.config.ts
+├── postcss.config.mjs
+├── tsconfig.json
+├── vitest.config.ts
+└── package.json
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## How it works
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **`src/data/*.ts`** is the single source of truth for portfolio content. Editing these files updates the rendered timeline and chord diagram.
+- **`ScrollytellingLayout.tsx`** renders the three-column timeline, builds the D3 chord diagram from a `cardChordMap` + recency-weighted matrix, and wires per-card `ScrollTrigger`s that fade non-active arcs/ribbons as you scroll.
+- **`renderBold`** parses `**…**` inside data strings, so the card copy supports inline emphasis without extra markup.

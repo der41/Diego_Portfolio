@@ -45,7 +45,7 @@ export default function HeroSection() {
 
       {/* Intro Narrative Header */}
       <header className="pb-20 px-12 max-w-[1920px] mx-auto flex items-center border-b border-[#424751]/10 relative z-10">
-        <div className="max-w-4xl">
+        <div className="max-w-4xl" id="hero-intro-copy">
           <p className="font-['Inter'] text-xs tracking-[0.2em] uppercase text-[#003c73] mb-6">
             
           </p>
