@@ -1,26 +1,32 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const navLinks = [
-  { label: "Me", href: "#hero-section" },
-  { label: "About", href: "#about-section" },
-  { label: "Education", href: "#education-section" },
-  { label: "Experience", href: "#experience-section" },
-  { label: "Projects", href: "#projects-section" },
+  { label: "Me", href: "/#hero-section" },
+  { label: "About", href: "/#about-section" },
+  { label: "Education", href: "/#education-section" },
+  { label: "Experience", href: "/#experience-section" },
+  { label: "Projects", href: "/#projects-section" },
+  { label: "Blog", href: "/blog" },
 ];
 
 const NAV_OFFSET_PX = 140;
 
 function getSectionId(href: string) {
-  return href.replace("#", "");
+  return href.includes("#") ? href.split("#")[1] : "";
 }
 
 export default function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero-section");
+  const pathname = usePathname() ?? "/";
 
   useEffect(() => {
+    if (pathname !== "/") return;
+
     const updateActiveSection = () => {
       const navHeight =
         document.querySelector("nav")?.getBoundingClientRect().height ?? NAV_OFFSET_PX;
@@ -57,10 +63,13 @@ export default function Navigation() {
       window.removeEventListener("resize", updateActiveSection);
       window.removeEventListener("hashchange", updateActiveSection);
     };
-  }, []);
+  }, [pathname]);
 
   const getLinkClassName = (href: string) => {
-    const isActive = activeSection === getSectionId(href);
+    const isActive =
+      href === "/blog"
+        ? pathname === "/blog" || pathname.startsWith("/blog/")
+        : pathname === "/" && activeSection === getSectionId(href);
 
     return isActive
       ? "font-['Noto_Serif'] text-lg tracking-tight text-[#003c73] border-b-2 border-[#003c73] pb-1"
@@ -81,14 +90,16 @@ export default function Navigation() {
         {/* Desktop links */}
         <div className="hidden md:flex gap-12 items-center">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.label}
               href={link.href}
               className={getLinkClassName(link.href)}
-              onClick={() => setActiveSection(getSectionId(link.href))}
+              onClick={() => {
+                if (link.href !== "/blog") setActiveSection(getSectionId(link.href));
+              }}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </div>
 
@@ -119,7 +130,7 @@ export default function Navigation() {
               href={link.href}
               className={getLinkClassName(link.href)}
               onClick={() => {
-                setActiveSection(getSectionId(link.href));
+                if (link.href !== "/blog") setActiveSection(getSectionId(link.href));
                 setMenuOpen(false);
               }}
             >
