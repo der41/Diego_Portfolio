@@ -49,7 +49,7 @@ export default function HeroSection() {
           <p className="font-['Inter'] text-xs tracking-[0.2em] uppercase text-[#003c73] mb-6">
             
           </p>
-          <h2 className="font-['Noto_Serif'] text-6xl md:text-8xl text-[#191b21] leading-[1.1] mb-8 font-bold tracking-tighter">
+          <h2 className="font-['Noto_Serif'] text-4xl sm:text-6xl md:text-8xl text-[#191b21] leading-[1.1] mb-8 font-bold tracking-tighter">
             This is my Journey in{" "}
             <span className="text-[#003c73] italic">Six Disciplines.</span>
           </h2>

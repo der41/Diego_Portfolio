@@ -7,7 +7,7 @@ export default function ContactSection() {
       <div className="max-w-4xl mx-auto text-center">
         <p className="font-['Inter'] text-xs tracking-[0.4em] uppercase text-[#003c73] mb-10">
         </p>
-        <h2 className="font-['Noto_Serif'] text-6xl md:text-8xl font-bold text-[#191b21] mb-12 tracking-tighter">
+        <h2 className="font-['Noto_Serif'] text-4xl sm:text-6xl md:text-8xl font-bold text-[#191b21] mb-12 tracking-tighter">
           Let&apos;s Start a{" "}
           <span className="italic text-[#003c73]">Conversation.</span>
         </h2>
