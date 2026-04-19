@@ -116,14 +116,23 @@ body {
   z-index: 0;
 }
 
+@media (max-width: 639px) {
+  .timeline-connector,
+  .branch-line {
+    display: none;
+  }
+}
+
 /* ─── Scroll reveal initial state ─────────────────────────────────── */
-[data-reveal] {
+[data-reveal],
+#hero-intro-copy {
   opacity: 0;
   transform: translateY(40px);
   will-change: opacity, transform;
 }
 @media (prefers-reduced-motion: reduce) {
-  [data-reveal] { opacity: 1; transform: none; }
+  [data-reveal],
+  #hero-intro-copy { opacity: 1; transform: none; }
 }
 
 /* ─── Chord diagram ───────────────────────────────────────────────── */

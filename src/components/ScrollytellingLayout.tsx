@@ -324,6 +324,7 @@ export default function ScrollytellingLayout() {
       });
 
       // ── GSAP Scroll Animations ────────────────────────────────────
+      const desktopMediaQuery = window.matchMedia("(min-width: 1024px)");
       const container = document.getElementById("chord-container");
       const blocks = document.querySelectorAll<HTMLElement>(".discipline-block");
       const heroIntroCopy = document.getElementById("hero-intro-copy");
@@ -363,30 +364,31 @@ export default function ScrollytellingLayout() {
         });
       }
 
-      blocks.forEach((block, index) => {
-        const blockRect = block.getBoundingClientRect();
-        tl.to(block, {
-          x: () => {
-            if (!container) return 0;
-            const rect = container.getBoundingClientRect();
-            return rect.left + rect.width / 2 - (blockRect.left + blockRect.width / 2);
-          },
-          y: () => {
-            if (!container) return 0;
-            const rect = container.getBoundingClientRect();
-            return rect.top + rect.height / 2 - (blockRect.top + blockRect.height / 2);
-          },
-          scale: 0.1,
-          opacity: 0,
-          rotate: 360,
-          duration: 2,
-          ease: "power2.inOut",
-        }, index * 0.1);
-      });
+      if (desktopMediaQuery.matches) {
+        blocks.forEach((block, index) => {
+          const blockRect = block.getBoundingClientRect();
+          tl.to(block, {
+            x: () => {
+              if (!container) return 0;
+              const rect = container.getBoundingClientRect();
+              return rect.left + rect.width / 2 - (blockRect.left + blockRect.width / 2);
+            },
+            y: () => {
+              if (!container) return 0;
+              const rect = container.getBoundingClientRect();
+              return rect.top + rect.height / 2 - (blockRect.top + blockRect.height / 2);
+            },
+            scale: 0.1,
+            opacity: 0,
+            rotate: 360,
+            duration: 2,
+            ease: "power2.inOut",
+          }, index * 0.1);
+        });
 
-      tl.to(container, { opacity: 1, scale: 1, duration: 1, ease: "back.out(1.7)" }, "-=1");
+        tl.to(container, { opacity: 1, scale: 1, duration: 1, ease: "back.out(1.7)" }, "-=1");
+      }
 
-      const desktopMediaQuery = window.matchMedia("(min-width: 1024px)");
       const pinCleanupFns: Array<() => void> = [];
       const setupPinTrigger = () => {
         pinCleanupFns.splice(0, pinCleanupFns.length).forEach((cleanup) => cleanup());
@@ -422,8 +424,8 @@ export default function ScrollytellingLayout() {
   }, []);
 
   return (
-    <main className="max-w-[1920px] mx-auto px-12 pt-24 pb-8 relative z-10" id="scrollytelling-section">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-24 relative">
+    <main className="max-w-[1920px] mx-auto px-4 sm:px-12 pt-24 pb-8 relative z-10" id="scrollytelling-section">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-24 relative">
 
         {/* ── Left Column: Vertical Timeline ──────────────────────── */}
         <div className="lg:col-span-7 relative">
@@ -431,24 +433,24 @@ export default function ScrollytellingLayout() {
 
           {/* ── Cluster A: sits above the line, between hero and timeline start ── */}
           <div className="relative h-0" aria-hidden="true">
-            <div className="absolute left-10 top-0 pointer-events-none -translate-x-[14%] -translate-y-[75%] z-0">
+            <div className="hidden sm:block absolute left-10 top-0 pointer-events-none -translate-x-[14%] -translate-y-[75%] z-0">
               <GraphCluster variant="a" className="w-[32rem] h-80" />
             </div>
           </div>
 
           {/* ── ABOUT ─────────────────────────────────────────────── */}
           <section className="relative mb-48" id="about">
-            <div className="flex items-center gap-12 mb-16 relative z-10">
-              <div className="w-20 h-20 rounded-[50%] bg-[#003c73] flex items-center justify-center text-white shadow-2xl ring-[12px] ring-[#faf8ff]">
-                <span className="material-symbols-outlined text-4xl">person</span>
+            <div className="flex items-center gap-4 sm:gap-12 mb-10 sm:mb-16 relative z-10">
+              <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-[50%] bg-[#003c73] flex items-center justify-center text-white shadow-2xl ring-8 sm:ring-[12px] ring-[#faf8ff] shrink-0">
+                <span className="material-symbols-outlined text-2xl sm:text-4xl">person</span>
               </div>
-              <h2 className="font-['Noto_Serif'] text-5xl font-bold tracking-tight">About</h2>
+              <h2 className="font-['Noto_Serif'] text-3xl sm:text-5xl font-bold tracking-tight">About</h2>
             </div>
-            <div className="ml-20 space-y-12">
+            <div className="ml-0 sm:ml-20 space-y-12">
               {about.map((item) => (
-                <div key={item.id} data-card-id={item.id} className="relative pl-16 group">
+                <div key={item.id} data-card-id={item.id} className="relative pl-0 sm:pl-16 group">
                   <div className="branch-line w-20 top-1/2 -left-10" style={{ height: "1px" }} />
-                  <div className="bg-[#d5e3ff]/30 p-8 rounded-xl shadow-sm border border-[#003c73]/10 hover:shadow-md transition-shadow">
+                  <div className="bg-[#d5e3ff]/30 p-5 sm:p-8 rounded-xl shadow-sm border border-[#003c73]/10 hover:shadow-md transition-shadow">
                     <span className="font-['Inter'] text-[10px] uppercase tracking-widest text-[#003c73] font-bold block mb-2">
                       {item.label}
                     </span>
@@ -464,24 +466,24 @@ export default function ScrollytellingLayout() {
 
           {/* ── Cluster D: a line-with-nodes crossing into Education ─ */}
           <div className="relative h-0 my-20" aria-hidden="true">
-            <div className="absolute left-10 top-0 pointer-events-none -translate-x-[10%] -translate-y-[180%] z-0">
+            <div className="hidden sm:block absolute left-10 top-0 pointer-events-none -translate-x-[10%] -translate-y-[180%] z-0">
               <GraphCluster variant="d" className="w-[32rem] h-24" />
             </div>
           </div>
 
           {/* ── EDUCATION ─────────────────────────────────────────── */}
           <section className="relative mb-0" id="education">
-            <div className="flex items-center gap-12 mb-16 relative z-10">
-              <div className="w-20 h-20 rounded-[50%] bg-[#006971] flex items-center justify-center text-white shadow-2xl ring-[12px] ring-[#faf8ff]">
-                <span className="material-symbols-outlined text-4xl">school</span>
+            <div className="flex items-center gap-4 sm:gap-12 mb-10 sm:mb-16 relative z-10">
+              <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-[50%] bg-[#006971] flex items-center justify-center text-white shadow-2xl ring-8 sm:ring-[12px] ring-[#faf8ff] shrink-0">
+                <span className="material-symbols-outlined text-2xl sm:text-4xl">school</span>
               </div>
-              <h2 className="font-['Noto_Serif'] text-5xl font-bold tracking-tight">Education</h2>
+              <h2 className="font-['Noto_Serif'] text-3xl sm:text-5xl font-bold tracking-tight">Education</h2>
             </div>
-            <div className="ml-20 space-y-12">
+            <div className="ml-0 sm:ml-20 space-y-12">
               {education.map((item) => (
-                <div key={item.id} data-card-id={item.id} className="relative pl-16 group">
+                <div key={item.id} data-card-id={item.id} className="relative pl-0 sm:pl-16 group">
                   <div className="branch-line w-20 top-1/2 -left-10" style={{ height: "1px" }} />
-                  <div className="bg-[#98f1fa]/30 p-8 rounded-xl shadow-sm border border-[#006971]/10 hover:shadow-md transition-shadow">
+                  <div className="bg-[#98f1fa]/30 p-5 sm:p-8 rounded-xl shadow-sm border border-[#006971]/10 hover:shadow-md transition-shadow">
                     <div className="flex justify-between items-start mb-4 gap-4">
                       <span className="font-['Inter'] text-xs tracking-widest uppercase text-[#006971] font-bold">
                         {item.label}
@@ -527,24 +529,24 @@ export default function ScrollytellingLayout() {
 
           {/* ── Cluster B: emerges from the timeline between Edu/Exp  */}
           <div className="relative h-0 my-24" aria-hidden="true">
-            <div className="absolute left-10 top-0 pointer-events-none -translate-x-[20%] -translate-y-1/2 z-0">
+            <div className="hidden sm:block absolute left-10 top-0 pointer-events-none -translate-x-[20%] -translate-y-1/2 z-0">
               <GraphCluster variant="b" className="w-64 h-44" />
             </div>
           </div>
 
           {/* ── EXPERIENCE ────────────────────────────────────────── */}
           <section className="relative mb-0" id="experience">
-            <div className="flex items-center gap-12 mb-16 relative z-10">
-              <div className="w-20 h-20 rounded-[50%] bg-[#6f2100] flex items-center justify-center text-white shadow-2xl ring-[12px] ring-[#faf8ff]">
-                <span className="material-symbols-outlined text-4xl">work</span>
+            <div className="flex items-center gap-4 sm:gap-12 mb-10 sm:mb-16 relative z-10">
+              <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-[50%] bg-[#6f2100] flex items-center justify-center text-white shadow-2xl ring-8 sm:ring-[12px] ring-[#faf8ff] shrink-0">
+                <span className="material-symbols-outlined text-2xl sm:text-4xl">work</span>
               </div>
-              <h2 className="font-['Noto_Serif'] text-5xl font-bold tracking-tight">Experience</h2>
+              <h2 className="font-['Noto_Serif'] text-3xl sm:text-5xl font-bold tracking-tight">Experience</h2>
             </div>
-            <div className="ml-20 space-y-12">
+            <div className="ml-0 sm:ml-20 space-y-12">
               {experience.map((item) => (
-                <div key={item.id} data-card-id={item.id} className="relative pl-16 group">
+                <div key={item.id} data-card-id={item.id} className="relative pl-0 sm:pl-16 group">
                   <div className="branch-line w-20 top-1/2 -left-10" style={{ height: "1px" }} />
-                  <div className="bg-[#ffdbcf]/30 p-8 rounded-xl shadow-sm border border-[#6f2100]/10 hover:shadow-md transition-shadow">
+                  <div className="bg-[#ffdbcf]/30 p-5 sm:p-8 rounded-xl shadow-sm border border-[#6f2100]/10 hover:shadow-md transition-shadow">
                     <span className="font-['Inter'] text-[10px] uppercase tracking-widest text-[#6f2100] font-bold block mb-2">
                       {item.org}
                     </span>
@@ -567,25 +569,25 @@ export default function ScrollytellingLayout() {
 
           {/* ── Cluster C: emerges from the timeline between Exp/Proj */}
           <div className="relative h-0 my-24" aria-hidden="true">
-            <div className="absolute left-10 top-0 pointer-events-none -translate-x-[20%] -translate-y-1/2 z-0">
+            <div className="hidden sm:block absolute left-10 top-0 pointer-events-none -translate-x-[20%] -translate-y-1/2 z-0">
               <GraphCluster variant="c" className="w-56 h-40" />
             </div>
           </div>
 
           {/* ── PROJECTS ──────────────────────────────────────────── */}
           <section className="relative" id="project">
-            <div className="flex items-center gap-12 mb-16 relative z-10">
-              <div className="w-20 h-20 rounded-[50%] bg-[#006f78] flex items-center justify-center text-white shadow-2xl ring-[12px] ring-[#faf8ff]">
-                <span className="material-symbols-outlined text-4xl">grid_view</span>
+            <div className="flex items-center gap-4 sm:gap-12 mb-10 sm:mb-16 relative z-10">
+              <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-[50%] bg-[#006f78] flex items-center justify-center text-white shadow-2xl ring-8 sm:ring-[12px] ring-[#faf8ff] shrink-0">
+                <span className="material-symbols-outlined text-2xl sm:text-4xl">grid_view</span>
               </div>
-              <h2 className="font-['Noto_Serif'] text-5xl font-bold tracking-tight">Projects</h2>
+              <h2 className="font-['Noto_Serif'] text-3xl sm:text-5xl font-bold tracking-tight">Projects</h2>
             </div>
-            <div className="ml-20" id="projects-cards">
+            <div className="ml-0 sm:ml-20" id="projects-cards">
               <div className="flex overflow-x-auto gap-8 pb-8 hide-scrollbar snap-x snap-mandatory">
                 {projects.map((project) => (
                   <div
                     key={project.id}
-                    className="min-w-[340px] md:min-w-[480px] snap-center bg-[#98f1fa]/20 p-8 rounded-xl border border-[#006f78]/10"
+                    className="min-w-[260px] sm:min-w-[340px] md:min-w-[480px] snap-center bg-[#98f1fa]/20 p-5 sm:p-8 rounded-xl border border-[#006f78]/10"
                   >
                     {project.imageUrl ? (
                       <div className="w-full h-48 relative rounded-lg overflow-hidden mb-6">
@@ -632,7 +634,7 @@ export default function ScrollytellingLayout() {
         </div>
 
         {/* ── Right Column: Sticky Chord Diagram ──────────────────── */}
-        <div className="lg:col-span-5 relative" id="chord-sticky-col">
+        <div className="hidden lg:block lg:col-span-5 relative" id="chord-sticky-col">
           <div className="flex flex-col items-center">
             <div className="w-full">
               <div

@@ -2,7 +2,7 @@ export default function ContactSection() {
   return (
     <section
       id="contact-section"
-      className="max-w-[1920px] mx-auto px-12 py-40 border-t border-[#424751]/10 bg-white/50"
+      className="max-w-[1920px] mx-auto px-4 sm:px-12 py-40 border-t border-[#424751]/10 bg-white/50"
     >
       <div className="max-w-4xl mx-auto text-center">
         <p className="font-['Inter'] text-xs tracking-[0.4em] uppercase text-[#003c73] mb-10">

@@ -6,7 +6,7 @@ export default function HeroSection() {
       {/* Hero Profile Section */}
       <section
         id="me"
-        className="pt-52 pb-32 px-12 max-w-[1920px] mx-auto flex flex-col items-center text-center relative z-10"
+        className="pt-52 pb-32 px-4 sm:px-12 max-w-[1920px] mx-auto flex flex-col items-center text-center relative z-10"
       >
         {/* Profile image */}
         <div className="relative mb-10">
@@ -33,7 +33,7 @@ export default function HeroSection() {
         </p>
 
         {/* Discipline color bar */}
-        <div className="flex gap-2 h-2 w-full max-w-xl" id="discipline-blocks">
+        <div className="hidden sm:flex gap-2 h-2 w-full max-w-xl" id="discipline-blocks">
           <div className="discipline-block flex-1 bg-[#003c73] rounded-full" title="Economics" />
           <div className="discipline-block flex-1 bg-[#006971] rounded-full" title="Statistics" />
           <div className="discipline-block flex-1 bg-[#6f2100] rounded-full" title="Engineering" />
@@ -44,7 +44,7 @@ export default function HeroSection() {
       </section>
 
       {/* Intro Narrative Header */}
-      <header className="pb-20 px-12 max-w-[1920px] mx-auto flex items-center border-b border-[#424751]/10 relative z-10">
+      <header className="pb-20 px-4 sm:px-12 max-w-[1920px] mx-auto flex items-center border-b border-[#424751]/10 relative z-10">
         <div className="max-w-4xl" id="hero-intro-copy">
           <p className="font-['Inter'] text-xs tracking-[0.2em] uppercase text-[#003c73] mb-6">
             
