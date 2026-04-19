@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exploring Everything | Diego Rodriguez</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: #faf8ff;
+    color: #191b21;
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Nav ────────────────────────────────────────────────────── */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: #faf8ff;
+    box-shadow: 0px 20px 40px rgba(25,27,33,0.04);
+  }
+  .nav-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 48px;
+  }
+  .wordmark {
+    font-family: 'Noto Serif', Georgia, serif;
+    font-weight: 400; font-size: 1.1rem; letter-spacing: -0.01em;
+    color: #191b21; text-decoration: none;
+  }
+  .wordmark em { font-style: italic; font-weight: 700; }
+  .nav-links { display: flex; gap: 36px; align-items: center; }
+  .nav-link {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem; font-weight: 500;
+    color: rgba(25,27,33,0.55); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-link:hover { color: #003c73; }
+  .nav-link.active { color: #003c73; font-weight: 600; }
+
+  /* ── Page wrapper ───────────────────────────────────────────── */
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
+
+  /* ── Hero / Header ──────────────────────────────────────────── */
+  .blog-hero {
+    padding: 96px 0 72px;
+    text-align: center;
+    border-bottom: 1px solid rgba(66,71,81,0.1);
+  }
+  .blog-title {
+    font-family: 'Noto Serif', Georgia, serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: #191b21;
+    margin-bottom: 20px;
+  }
+  .blog-title em { color: #003c73; font-style: italic; }
+  .blog-subtitle-wrap {
+    display: inline-block;
+    background: #d5e3ff;
+    padding: 6px 20px;
+    border-radius: 4px;
+    margin-bottom: 48px;
+  }
+  .blog-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #003c73;
+    letter-spacing: 0.01em;
+  }
+
+  /* ── Theme tags ─────────────────────────────────────────────── */
+  .theme-tags {
+    display: flex; justify-content: center;
+    align-items: center; gap: 0; flex-wrap: wrap;
+  }
+  .theme-tag {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem; font-weight: 600;
+    letter-spacing: 0.02em;
+    color: #424751;
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 9999px;
+    transition: background 0.2s, color 0.2s;
+    cursor: pointer;
+  }
+  .theme-tag:hover,
+  .theme-tag.active { background: #003c73; color: #fff; }
+  .theme-dot {
+    color: rgba(66,71,81,0.3);
+    font-size: 1rem;
+    padding: 0 4px;
+    user-select: none;
+  }
+
+  /* ── Featured cards ─────────────────────────────────────────── */
+  .section-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: #727782; margin-bottom: 20px;
+  }
+  .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 72px;
+  }
+  @media (max-width: 700px) { .featured-grid { grid-template-columns: 1fr; } }
+  .feat-card {
+    background: #ededf6;
+    border-radius: 12px;
+    padding: 24px;
+    position: relative;
+    text-decoration: none;
+    display: flex; flex-direction: column;
+    border: 1px solid rgba(0,60,115,0.06);
+    transition: box-shadow 0.2s, background 0.2s;
+    cursor: pointer;
+  }
+  .feat-card:hover {
+    background: #e7e7f0;
+    box-shadow: 0 4px 20px rgba(25,27,33,0.08);
+  }
+  .feat-card-icon {
+    position: absolute; top: 16px; right: 16px;
+    color: #003c73; opacity: 0.4;
+    font-size: 16px; font-weight: 700;
+    transition: opacity 0.2s;
+  }
+  .feat-card:hover .feat-card-icon { opacity: 0.9; }
+  .feat-card-title {
+    font-family: 'Noto Serif', Georgia, serif;
+    font-size: 1.1rem; font-weight: 700;
+    line-height: 1.35;
+    color: #191b21;
+    margin-bottom: 10px;
+    padding-right: 20px;
+    text-wrap: pretty;
+  }
+  .feat-card-excerpt {
+    font-size: 0.8rem;
+    color: rgba(66,71,81,0.7);
+    line-height: 1.5;
+    flex: 1;
+    margin-bottom: 14px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .feat-card-meta {
+    font-size: 0.75rem;
+    color: rgba(66,71,81,0.55);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .feat-card-meta span { display: flex; align-items: center; gap: 4px; }
+
+  /* ── Divider ─────────────────────────────────────────────────── */
+  .section-divider {
+    border: none;
+    border-top: 1px solid rgba(66,71,81,0.1);
+    margin: 0 0 48px;
+  }
+
+  /* ── Post list ───────────────────────────────────────────────── */
+  .posts-section { padding-bottom: 96px; }
+  .year-group { margin-bottom: 48px; }
+  .year-label {
+    font-family: 'Noto Serif', Georgia, serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: rgba(66,71,81,0.35);
+    letter-spacing: 0.08em;
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(66,71,81,0.08);
+  }
+  .post-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    gap: 24px;
+    padding: 24px 0;
+    border-bottom: 1px solid rgba(66,71,81,0.06);
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.15s;
+  }
+  .post-item:hover .post-title { color: #003c73; }
+  .post-title {
+    font-family: 'Noto Serif', Georgia, serif;
+    font-size: 1.25rem; font-weight: 700;
+    line-height: 1.3; letter-spacing: -0.01em;
+    color: #191b21;
+    margin-bottom: 8px;
+    text-wrap: pretty;
+    transition: color 0.2s;
+  }
+  .post-excerpt {
+    font-size: 0.875rem;
+    color: #424751;
+    line-height: 1.6;
+    margin-bottom: 14px;
+    max-width: 680px;
+  }
+  .post-meta {
+    display: flex; align-items: center; gap: 12px;
+    flex-wrap: wrap;
+    font-size: 0.75rem; color: rgba(66,71,81,0.5);
+  }
+  .post-meta-dot { color: rgba(66,71,81,0.25); }
+  .post-tag {
+    font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.06em;
+    padding: 2px 8px; border-radius: 9999px;
+    text-transform: uppercase;
+  }
+  .post-date-col {
+    font-size: 0.75rem;
+    color: rgba(66,71,81,0.4);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    padding-top: 4px;
+  }
+  .read-time {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 0.75rem; color: rgba(66,71,81,0.5);
+  }
+
+  /* ── Tag color map ───────────────────────────────────────────── */
+  .tag-economy      { background: rgba(0,60,115,0.1);  color: #003c73; }
+  .tag-ml           { background: rgba(111,33,0,0.1);   color: #6f2100; }
+  .tag-analytics    { background: rgba(0,105,113,0.12); color: #006971; }
+  .tag-ai           { background: rgba(47,143,152,0.12);color: #2F8F98; }
+  .tag-code         { background: rgba(0,111,120,0.1);  color: #006f78; }
+  .tag-explainability { background: rgba(149,49,2,0.1); color: #953102; }
+
+  /* ── Footer ──────────────────────────────────────────────────── */
+  footer {
+    border-top: 1px solid rgba(66,71,81,0.08);
+    padding: 28px 48px;
+    max-width: 1100px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.8rem; color: rgba(66,71,81,0.45);
+  }
+  .footer-wordmark {
+    font-family: 'Noto Serif', Georgia, serif;
+    font-weight: 700; font-size: 1rem;
+    letter-spacing: -0.02em; color: #191b21;
+    text-decoration: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Navigation (matches main portfolio nav exactly) ───────── -->
+<nav>
+  <div class="nav-inner" style="max-width:1920px;padding:24px 48px">
+    <a href="index.html" class="wordmark" style="font-family:'Noto Serif',Georgia,serif;font-weight:700;font-size:1.5rem;letter-spacing:-0.03em;color:#191b21;text-decoration:none">Diego Rodriguez</a>
+    <div class="nav-links" style="gap:48px">
+      <a href="index.html#hero-section"      class="nav-link" style="font-family:'Noto Serif',Georgia,serif;font-size:1.125rem;letter-spacing:-0.01em;color:rgba(25,27,33,0.6);font-weight:400">Me</a>
+      <a href="index.html#about-section"     class="nav-link" style="font-family:'Noto Serif',Georgia,serif;font-size:1.125rem;letter-spacing:-0.01em;color:rgba(25,27,33,0.6);font-weight:400">About</a>
+      <a href="index.html#education-section" class="nav-link" style="font-family:'Noto Serif',Georgia,serif;font-size:1.125rem;letter-spacing:-0.01em;color:rgba(25,27,33,0.6);font-weight:400">Education</a>
+      <a href="index.html#experience-section"class="nav-link" style="font-family:'Noto Serif',Georgia,serif;font-size:1.125rem;letter-spacing:-0.01em;color:rgba(25,27,33,0.6);font-weight:400">Experience</a>
+      <a href="index.html#projects-section"  class="nav-link" style="font-family:'Noto Serif',Georgia,serif;font-size:1.125rem;letter-spacing:-0.01em;color:rgba(25,27,33,0.6);font-weight:400">Projects</a>
+      <a href="blog.html"                    class="nav-link" style="font-family:'Noto Serif',Georgia,serif;font-size:1.125rem;letter-spacing:-0.01em;color:#003c73;border-bottom:2px solid #003c73;padding-bottom:4px;font-weight:400">Blog</a>
+    </div>
+    <a href="index.html#contact-section" style="background:#003c73;color:#fff;padding:8px 32px;font-size:0.875rem;font-weight:500;letter-spacing:0.04em;border-radius:8px;text-decoration:none">Connect</a>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- ── Blog Hero ──────────────────────────────────────────────── -->
+  <header class="blog-hero">
+    <h1 class="blog-title">Exploring <em>Everything</em></h1>
+    <div class="blog-subtitle-wrap">
+      <p class="blog-subtitle">Insights and Surprises Along the Way</p>
+    </div>
+    <div class="theme-tags" id="theme-tags">
+      <span class="theme-tag active" data-tag="all">All</span>
+      <span class="theme-dot">·</span>
+      <span class="theme-tag" data-tag="economy"># Economy</span>
+      <span class="theme-dot">·</span>
+      <span class="theme-tag" data-tag="ml"># ML</span>
+      <span class="theme-dot">·</span>
+      <span class="theme-tag" data-tag="analytics"># Analytics</span>
+      <span class="theme-dot">·</span>
+      <span class="theme-tag" data-tag="ai"># AI</span>
+      <span class="theme-dot">·</span>
+      <span class="theme-tag" data-tag="code"># Code</span>
+    </div>
+  </header>
+
+  <!-- ── Featured ───────────────────────────────────────────────── -->
+  <section style="padding-top: 56px">
+    <div class="section-label">Selected</div>
+    <div class="featured-grid">
+
+      <div class="feat-card" data-tags="ml,ai">
+        <span class="feat-card-icon">↗</span>
+        <h3 class="feat-card-title">how to analyze the black box — a look into GradCAM</h3>
+        <p class="feat-card-excerpt">Deep learning models are powerful but often uninterpretable. GradCAM offers a window into what the network actually sees.</p>
+        <div class="feat-card-meta">
+          <span>4 min read</span>
+          <span>·</span>
+          <span>
+            <span class="material-symbols-outlined" style="font-size:13px">calendar_today</span>
+            2025
+          </span>
+        </div>
+      </div>
+
+      <div class="feat-card" data-tags="economy,ai">
+        <span class="feat-card-icon">↗</span>
+        <h3 class="feat-card-title">unlocking economics, how AI democratizes data access</h3>
+        <p class="feat-card-excerpt">Ever felt lost in a sea of economic data? AI is changing the interface between complex datasets and decision-makers.</p>
+        <div class="feat-card-meta">
+          <span>17 min read</span>
+          <span>·</span>
+          <span>
+            <span class="material-symbols-outlined" style="font-size:13px">calendar_today</span>
+            2025
+          </span>
+        </div>
+      </div>
+
+      <div class="feat-card" data-tags="analytics,code">
+        <span class="feat-card-icon">↗</span>
+        <h3 class="feat-card-title">effortless real-time data monitoring</h3>
+        <p class="feat-card-excerpt">When you require information with low latency and high reliability, real-time pipelines beat batch workflows every time.</p>
+        <div class="feat-card-meta">
+          <span>4 min read</span>
+          <span>·</span>
+          <span>
+            <span class="material-symbols-outlined" style="font-size:13px">calendar_today</span>
+            2020
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ── Post list ──────────────────────────────────────────────── -->
+  <section class="posts-section" id="post-list">
+
+    <!-- 2026 -->
+    <div class="year-group" data-year="2026">
+      <div class="year-label">2026</div>
+
+      <a class="post-item" data-tags="analytics,explainability,economy">
+        <div>
+          <h2 class="post-title">DiD Is Not Just One Method — Why Staggered Programs Need a Better Yardstick</h2>
+          <p class="post-excerpt">In the world of data science, this "staggered rollout" is a goldmine for research, but it's also a trap. If we use old-school shortcuts to measure success, we often end up with the wrong answer.</p>
+          <div class="post-meta">
+            <span class="read-time">
+              <span class="material-symbols-outlined" style="font-size:13px">schedule</span>
+              6 min read
+            </span>
+            <span class="post-meta-dot">·</span>
+            <span>February 18, 2026</span>
+            <span class="post-meta-dot">·</span>
+            <span class="post-tag tag-analytics"># Analytics</span>
+            <span class="post-tag tag-explainability"># Explainability</span>
+            <span class="post-tag tag-economy"># Economy</span>
+          </div>
+        </div>
+        <div class="post-date-col">Feb 2026</div>
+      </a>
+
+      <a class="post-item" data-tags="ml,ai">
+        <div>
+          <h2 class="post-title">LLM Fairness at Scale — What 200K Job Postings Taught Me</h2>
+          <p class="post-excerpt">Language models encode the biases present in their training data. Running systematic evaluations across a large corpus of job descriptions reveals consistent patterns worth understanding.</p>
+          <div class="post-meta">
+            <span class="read-time">
+              <span class="material-symbols-outlined" style="font-size:13px">schedule</span>
+              9 min read
+            </span>
+            <span class="post-meta-dot">·</span>
+            <span>January 5, 2026</span>
+            <span class="post-meta-dot">·</span>
+            <span class="post-tag tag-ml"># ML</span>
+            <span class="post-tag tag-ai"># AI</span>
+          </div>
+        </div>
+        <div class="post-date-col">Jan 2026</div>
+      </a>
+    </div>
+
+    <!-- 2025 -->
+    <div class="year-group" data-year="2025">
+      <div class="year-label">2025</div>
+
+      <a class="post-item" data-tags="ml,ai">
+        <div>
+          <h2 class="post-title">how to analyze the black box — a look into GradCAM</h2>
+          <p class="post-excerpt">Deep learning models are powerful but notoriously hard to interpret. GradCAM is a technique that visualizes which regions of an input image the network focused on — and it's simpler than you think.</p>
+          <div class="post-meta">
+            <span class="read-time">
+              <span class="material-symbols-outlined" style="font-size:13px">schedule</span>
+              4 min read
+            </span>
+            <span class="post-meta-dot">·</span>
+            <span>October 2025</span>
+            <span class="post-meta-dot">·</span>
+            <span class="post-tag tag-ml"># ML</span>
+            <span class="post-tag tag-ai"># AI</span>
+          </div>
+        </div>
+        <div class="post-date-col">Oct 2025</div>
+      </a>
+
+      <a class="post-item" data-tags="economy,ai">
+        <div>
+          <h2 class="post-title">unlocking economics, how AI democratizes data access</h2>
+          <p class="post-excerpt">Ever felt lost in a sea of economic data? Modern LLM interfaces are becoming the translation layer between complex macroeconomic datasets and the analysts who need to act on them.</p>
+          <div class="post-meta">
+            <span class="read-time">
+              <span class="material-symbols-outlined" style="font-size:13px">schedule</span>
+              17 min read
+            </span>
+            <span class="post-meta-dot">·</span>
+            <span>March 2025</span>
+            <span class="post-meta-dot">·</span>
+            <span class="post-tag tag-economy"># Economy</span>
+            <span class="post-tag tag-ai"># AI</span>
+          </div>
+        </div>
+        <div class="post-date-col">Mar 2025</div>
+      </a>
+
+      <a class="post-item" data-tags="analytics,code">
+        <div>
+          <h2 class="post-title">Building KPI dashboards that don't lie — a practitioner's checklist</h2>
+          <p class="post-excerpt">Most dashboards fail quietly. They show numbers that are technically correct but practically misleading. Here's the validation checklist I use before shipping any reporting system.</p>
+          <div class="post-meta">
+            <span class="read-time">
+              <span class="material-symbols-outlined" style="font-size:13px">schedule</span>
+              7 min read
+            </span>
+            <span class="post-meta-dot">·</span>
+            <span>January 2025</span>
+            <span class="post-meta-dot">·</span>
+            <span class="post-tag tag-analytics"># Analytics</span>
+            <span class="post-tag tag-code"># Code</span>
+          </div>
+        </div>
+        <div class="post-date-col">Jan 2025</div>
+      </a>
+    </div>
+
+    <!-- 2020 -->
+    <div class="year-group" data-year="2020">
+      <div class="year-label">2020</div>
+
+      <a class="post-item" data-tags="analytics,code">
+        <div>
+          <h2 class="post-title">effortless real-time data monitoring</h2>
+          <p class="post-excerpt">When you require information with low latency, batch pipelines just don't cut it. A practical guide to building lightweight streaming monitors that actually stay up.</p>
+          <div class="post-meta">
+            <span class="read-time">
+              <span class="material-symbols-outlined" style="font-size:13px">schedule</span>
+              4 min read
+            </span>
+            <span class="post-meta-dot">·</span>
+            <span>2020</span>
+            <span class="post-meta-dot">·</span>
+            <span class="post-tag tag-analytics"># Analytics</span>
+            <span class="post-tag tag-code"># Code</span>
+          </div>
+        </div>
+        <div class="post-date-col">2020</div>
+      </a>
+    </div>
+
+  </section>
+</div>
+
+<!-- ── Footer ──────────────────────────────────────────────────── -->
+<div style="border-top: 1px solid rgba(66,71,81,0.08);">
+  <footer>
+    <a href="index.html" class="footer-wordmark">Diego Rodriguez</a>
+    <span>© 2026 · Data Science & Economics</span>
+  </footer>
+</div>
+
+<script>
+  // ── Theme tag filtering ──────────────────────────────────────
+  const tags = document.querySelectorAll('.theme-tag');
+  let activeTag = 'all';
+
+  tags.forEach(tag => {
+    tag.addEventListener('click', () => {
+      activeTag = tag.dataset.tag;
+      tags.forEach(t => t.classList.toggle('active', t.dataset.tag === activeTag));
+      filterPosts();
+    });
+  });
+
+  function filterPosts() {
+    // Featured cards
+    document.querySelectorAll('.feat-card').forEach(card => {
+      const cardTags = card.dataset.tags.split(',');
+      const show = activeTag === 'all' || cardTags.includes(activeTag);
+      card.style.display = show ? 'flex' : 'none';
+    });
+
+    // Post list items
+    document.querySelectorAll('.post-item').forEach(post => {
+      const postTags = post.dataset.tags.split(',');
+      const show = activeTag === 'all' || postTags.includes(activeTag);
+      post.style.display = show ? 'grid' : 'none';
+    });
+
+    // Year groups — hide if all posts inside are hidden
+    document.querySelectorAll('.year-group').forEach(group => {
+      const visible = [...group.querySelectorAll('.post-item')].some(p => p.style.display !== 'none');
+      group.style.display = visible ? 'block' : 'none';
+    });
+  }
+
+  // Persist active tag in localStorage
+  const saved = localStorage.getItem('blog-tag');
+  if (saved) {
+    const el = document.querySelector(`[data-tag="${saved}"]`);
+    if (el) { el.click(); }
+  }
+  tags.forEach(t => {
+    t.addEventListener('click', () => localStorage.setItem('blog-tag', t.dataset.tag));
+  });
+</script>
+</body>
+</html>

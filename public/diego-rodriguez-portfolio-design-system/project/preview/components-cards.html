@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#faf8ff; font-family:'Inter',sans-serif; padding:20px; display:flex; gap:16px; flex-wrap:wrap; }
+.card { border-radius:12px; padding:20px; width:200px; box-shadow:0 1px 3px rgba(25,27,33,0.06); }
+.card-label { font-size:9px; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:6px; }
+.card-title { font-family:'Noto Serif',Georgia,serif; font-size:1.1rem; margin-bottom:8px; color:#191b21; }
+.card-body  { font-size:11px; line-height:1.5; color:#424751; }
+.bullet { font-size:10px; color:#424751; line-height:1.6; padding-left:12px; position:relative; }
+.bullet::before { content:''; position:absolute; left:0; top:0.5em; width:5px; height:5px; border-radius:50%; }
+</style></head>
+<body>
+  <!-- About card -->
+  <div class="card" style="background:rgba(213,227,255,0.3); border:1px solid rgba(0,60,115,0.1)">
+    <div class="card-label" style="color:#003c73">Background</div>
+    <div class="card-title">Data Foundations</div>
+    <div class="card-body">Six years building ML systems across fintech, central banking, and research.</div>
+  </div>
+  <!-- Education card -->
+  <div class="card" style="background:rgba(152,241,250,0.3); border:1px solid rgba(0,105,113,0.1)">
+    <div class="card-label" style="color:#006971">Duke University</div>
+    <div class="card-title">M.S. Data Science</div>
+    <div class="card-body">Machine learning, causal inference, NLP, and data engineering.</div>
+    <div class="bullet" style="color:#424751;margin-top:8px">
+      <span style="position:absolute;left:0;top:0.5em;width:5px;height:5px;border-radius:50%;background:#006971;display:block"></span>
+      GPA 3.9 · Expected 2025
+    </div>
+  </div>
+  <!-- Experience card -->
+  <div class="card" style="background:rgba(255,219,207,0.3); border:1px solid rgba(111,33,0,0.1)">
+    <div class="card-label" style="color:#6f2100">Yodlee</div>
+    <div class="card-title">Data Science Intern</div>
+    <div class="card-body">Built AI-ready pipelines and LLM systems in fintech workflows on AWS.</div>
+  </div>
+  <!-- Project card -->
+  <div class="card" style="background:rgba(152,241,250,0.2); border:1px solid rgba(0,111,120,0.1)">
+    <div class="card-label" style="color:#006f78">AI · NLP · CS</div>
+    <div class="card-title">LLM Risk Assessment</div>
+    <div class="card-body">Interactive bias analysis demo on job-description fairness.</div>
+  </div>
+</body></html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#faf8ff; font-family:'Inter',sans-serif; padding:20px 24px; }
+.label { font-size:10px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#424751; margin-bottom:12px; }
+.timeline { position:relative; padding-left:40px; }
+.line { position:absolute; left:20px; top:0; bottom:0; width:1px; background:linear-gradient(to bottom,#1c5fa8 0%,#1c5fa8 90%,transparent 100%); }
+.node { position:relative; margin-bottom:16px; }
+.dot { position:absolute; left:-28px; top:50%; transform:translateY(-50%); width:12px; height:12px; border-radius:50%; border:2px solid; }
+.branch { position:absolute; left:-28px; top:50%; width:20px; height:1px; }
+.node-card { border-radius:8px; padding:10px 14px; font-size:11px; }
+</style></head>
+<body>
+<div class="label">Timeline System</div>
+<div class="timeline">
+  <div class="line"></div>
+  <!-- Section node -->
+  <div style="display:flex;align-items:center;gap:20px;margin-bottom:16px">
+    <div style="width:40px;height:40px;border-radius:50%;background:#003c73;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;box-shadow:0 0 0 8px #faf8ff">●</div>
+    <div style="font-family:'Noto Serif',Georgia,serif;font-size:1.5rem;font-weight:700;letter-spacing:-0.02em;color:#191b21">About</div>
+  </div>
+  <div class="node">
+    <div class="dot" style="background:#d5e3ff;border-color:#003c73"></div>
+    <div class="branch" style="background:linear-gradient(to right,#1c5fa8,transparent)"></div>
+    <div class="node-card" style="background:rgba(213,227,255,0.3);border:1px solid rgba(0,60,115,0.1);margin-left:4px">
+      <div style="font-size:9px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#003c73;margin-bottom:3px">Background</div>
+      <div style="font-family:'Noto Serif',Georgia,serif;font-size:13px;color:#191b21">Data Foundations</div>
+    </div>
+  </div>
+  <!-- Section node 2 -->
+  <div style="display:flex;align-items:center;gap:20px;margin-bottom:16px;margin-top:8px">
+    <div style="width:40px;height:40px;border-radius:50%;background:#006971;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;box-shadow:0 0 0 8px #faf8ff">●</div>
+    <div style="font-family:'Noto Serif',Georgia,serif;font-size:1.5rem;font-weight:700;letter-spacing:-0.02em;color:#191b21">Education</div>
+  </div>
+  <div class="node">
+    <div class="dot" style="background:#98f1fa;border-color:#006971"></div>
+    <div class="branch" style="background:linear-gradient(to right,#006971,transparent)"></div>
+    <div class="node-card" style="background:rgba(152,241,250,0.3);border:1px solid rgba(0,105,113,0.1);margin-left:4px">
+      <div style="font-size:9px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#006971;margin-bottom:3px">Duke University</div>
+      <div style="font-family:'Noto Serif',Georgia,serif;font-size:13px;color:#191b21">M.S. Data Science</div>
+    </div>
+  </div>
+</div>
+</body></html>
