@@ -351,7 +351,7 @@ export default function ScrollytellingLayout() {
           ease: "power2.out",
           duration: 0.8,
           scrollTrigger: {
-            trigger: "#hero-section",
+            trigger: "#me",
             start: "top top-=250",
             end: "top top-=350",
             scrub: 0.6,
@@ -437,7 +437,7 @@ export default function ScrollytellingLayout() {
           </div>
 
           {/* ── ABOUT ─────────────────────────────────────────────── */}
-          <section className="relative mb-48" id="about-section">
+          <section className="relative mb-48" id="about">
             <div className="flex items-center gap-12 mb-16 relative z-10">
               <div className="w-20 h-20 rounded-[50%] bg-[#003c73] flex items-center justify-center text-white shadow-2xl ring-[12px] ring-[#faf8ff]">
                 <span className="material-symbols-outlined text-4xl">person</span>
@@ -470,7 +470,7 @@ export default function ScrollytellingLayout() {
           </div>
 
           {/* ── EDUCATION ─────────────────────────────────────────── */}
-          <section className="relative mb-0" id="education-section">
+          <section className="relative mb-0" id="education">
             <div className="flex items-center gap-12 mb-16 relative z-10">
               <div className="w-20 h-20 rounded-[50%] bg-[#006971] flex items-center justify-center text-white shadow-2xl ring-[12px] ring-[#faf8ff]">
                 <span className="material-symbols-outlined text-4xl">school</span>
@@ -533,7 +533,7 @@ export default function ScrollytellingLayout() {
           </div>
 
           {/* ── EXPERIENCE ────────────────────────────────────────── */}
-          <section className="relative mb-0" id="experience-section">
+          <section className="relative mb-0" id="experience">
             <div className="flex items-center gap-12 mb-16 relative z-10">
               <div className="w-20 h-20 rounded-[50%] bg-[#6f2100] flex items-center justify-center text-white shadow-2xl ring-[12px] ring-[#faf8ff]">
                 <span className="material-symbols-outlined text-4xl">work</span>
@@ -573,7 +573,7 @@ export default function ScrollytellingLayout() {
           </div>
 
           {/* ── PROJECTS ──────────────────────────────────────────── */}
-          <section className="relative" id="projects-section">
+          <section className="relative" id="project">
             <div className="flex items-center gap-12 mb-16 relative z-10">
               <div className="w-20 h-20 rounded-[50%] bg-[#006f78] flex items-center justify-center text-white shadow-2xl ring-[12px] ring-[#faf8ff]">
                 <span className="material-symbols-outlined text-4xl">grid_view</span>

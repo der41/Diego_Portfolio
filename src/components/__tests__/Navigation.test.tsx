@@ -24,7 +24,7 @@ describe("Navigation", () => {
   it("links point to absolute homepage anchors", () => {
     render(<Navigation />);
     const aboutLinks = screen.getAllByRole("link", { name: "About" });
-    expect(aboutLinks[0]).toHaveAttribute("href", "/#about-section");
+    expect(aboutLinks[0]).toHaveAttribute("href", "/#about");
   });
 
   it("Blog link points to /blog", () => {

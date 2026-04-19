@@ -5,7 +5,7 @@ export default function HeroSection() {
     <>
       {/* Hero Profile Section */}
       <section
-        id="hero-section"
+        id="me"
         className="pt-52 pb-32 px-12 max-w-[1920px] mx-auto flex flex-col items-center text-center relative z-10"
       >
         {/* Profile image */}

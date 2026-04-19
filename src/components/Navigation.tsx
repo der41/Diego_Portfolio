@@ -5,11 +5,11 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const navLinks = [
-  { label: "Me", href: "/#hero-section" },
-  { label: "About", href: "/#about-section" },
-  { label: "Education", href: "/#education-section" },
-  { label: "Experience", href: "/#experience-section" },
-  { label: "Projects", href: "/#projects-section" },
+  { label: "Me", href: "/#me" },
+  { label: "About", href: "/#about" },
+  { label: "Education", href: "/#education" },
+  { label: "Experience", href: "/#experience" },
+  { label: "Projects", href: "/#project" },
   { label: "Blog", href: "/blog" },
 ];
 
@@ -21,7 +21,7 @@ function getSectionId(href: string) {
 
 export default function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("hero-section");
+  const [activeSection, setActiveSection] = useState("me");
   const pathname = usePathname() ?? "/";
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export default function Navigation() {
       const navHeight =
         document.querySelector("nav")?.getBoundingClientRect().height ?? NAV_OFFSET_PX;
       const activationLine = navHeight + 24;
-      let nextActiveSection = "hero-section";
+      let nextActiveSection = "me";
 
       for (const link of navLinks) {
         const section = document.getElementById(getSectionId(link.href));
