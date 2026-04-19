@@ -591,7 +591,16 @@ export default function ScrollytellingLayout() {
                   >
                     {project.imageUrl ? (
                       <div className="w-full h-48 relative rounded-lg overflow-hidden mb-6">
-                        <Image src={project.imageUrl} alt={project.title} fill sizes="(max-width: 768px) 100vw, 450px" quality={95} className={`object-cover ${project.imageClassName ?? ""}`} />
+                        <Image
+                          src={project.imageUrl}
+                          alt={project.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 450px"
+                          quality={95}
+                          className={`object-cover ${project.imageClassName ?? ""} ${
+                            project.id === "knowledge-distillation" ? "object-cover object-[56%_62%] scale-[1.08]" : ""
+                          }`}
+                        />
                       </div>
                     ) : (
                       <div className="w-full h-48 bg-[#003c73]/10 rounded-lg mb-6 flex items-center justify-center">

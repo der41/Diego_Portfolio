@@ -59,6 +59,21 @@ export const projects: Project[] = [
     ],
   },
   {
+    id: "knowledge-distillation",
+    title: "Knowledge Distillation for LLMs",
+    description: "Resource-efficient distillation framework compressing large language models across English, Spanish, and code tasks.",
+    tag: "LLMs, Distillation, RL",
+    imageUrl: "/images/KD_LLM.png",
+    imageClassName: "object-contain",
+    link: "https://github.com/der41/Distill_LLM",
+    linkLabel: "GitHub Repo",
+    bullets: [
+      "Compressed a GPT-2 1.5B into a GPT-2 125M while retaining 75% of teacher Rouge-L on English prompts.",
+      "Reached within 95% of teacher Rouge-L on Spanish tasks with 10% of the parameters and beat the fine-tuned baseline by to 10% early in training.",
+      "Extended the setup with Chain-of-Thought and GRPO for code generation, improving reasoning coherence and correctness beyond KD alone.",
+    ],
+  },
+  {
     id: "causal-impact",
     title: "Causal Impact Study",
     description: "CEP study analyzing over 100M+ student records to evaluate educational outcomes.",
