@@ -44,15 +44,12 @@ export default function HeroSection() {
       </section>
 
       {/* Intro Narrative Header */}
-      <header
-        id="intro-narrative"
-        className="pb-20 px-12 max-w-[1920px] mx-auto flex items-center border-b border-[#424751]/10 relative z-10"
-      >
-        <div className="max-w-4xl">
-          <h2
-            data-reveal
-            className="font-['Noto_Serif'] text-6xl md:text-8xl text-[#191b21] leading-[1.1] mb-8 font-bold tracking-tighter"
-          >
+      <header className="pb-20 px-12 max-w-[1920px] mx-auto flex items-center border-b border-[#424751]/10 relative z-10">
+        <div className="max-w-4xl" id="hero-intro-copy">
+          <p className="font-['Inter'] text-xs tracking-[0.2em] uppercase text-[#003c73] mb-6">
+            
+          </p>
+          <h2 className="font-['Noto_Serif'] text-6xl md:text-8xl text-[#191b21] leading-[1.1] mb-8 font-bold tracking-tighter">
             This is my Journey in{" "}
             <span className="text-[#003c73] italic">Six Disciplines.</span>
           </h2>

@@ -170,12 +170,16 @@ export default function ScrollytellingLayout() {
   useEffect(() => {
     if (initialized.current) return;
     initialized.current = true;
+    let isDisposed = false;
+    const cleanupFns: Array<() => void> = [];
+    const mountNode = chordMountRef.current;
 
     Promise.all([
       import("gsap"),
       import("gsap/ScrollTrigger"),
       import("d3"),
     ]).then(([{ default: gsap }, { ScrollTrigger }, d3Module]) => {
+      if (isDisposed) return;
       const d3 = d3Module;
       gsap.registerPlugin(ScrollTrigger);
 
@@ -307,7 +311,7 @@ export default function ScrollytellingLayout() {
       document.querySelectorAll<HTMLElement>("[data-card-id]").forEach((el) => {
         const id = el.dataset.cardId;
         if (!id || !(id in cardChordMap)) return;
-        ScrollTrigger.create({
+        const trigger = ScrollTrigger.create({
           trigger: el,
           start: "top 70%",
           end: "bottom 30%",
@@ -316,6 +320,7 @@ export default function ScrollytellingLayout() {
           onLeave: () => { activeCards.delete(id); applyChordFocus(); },
           onLeaveBack: () => { activeCards.delete(id); applyChordFocus(); },
         });
+        cleanupFns.push(() => trigger.kill());
       });
 
       // ── Intro narrative reveal ───────────────────────────────────
@@ -341,8 +346,10 @@ export default function ScrollytellingLayout() {
       // ── GSAP Scroll Animations ────────────────────────────────────
       const container = document.getElementById("chord-container");
       const blocks = document.querySelectorAll<HTMLElement>(".discipline-block");
+      const heroIntroCopy = document.getElementById("hero-intro-copy");
 
       if (container) gsap.set(container, { opacity: 0, scale: 0.5 });
+      if (heroIntroCopy) gsap.set(heroIntroCopy, { autoAlpha: 0, y: 28 });
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -352,6 +359,29 @@ export default function ScrollytellingLayout() {
           scrub: 0.8,
         },
       });
+      cleanupFns.push(() => {
+        tl.scrollTrigger?.kill();
+        tl.kill();
+      });
+
+      if (heroIntroCopy) {
+        const introReveal = gsap.to(heroIntroCopy, {
+          autoAlpha: 1,
+          y: 0,
+          ease: "power2.out",
+          duration: 0.8,
+          scrollTrigger: {
+            trigger: "#hero-section",
+            start: "top top-=250",
+            end: "top top-=350",
+            scrub: 0.6,
+          },
+        });
+        cleanupFns.push(() => {
+          introReveal.scrollTrigger?.kill();
+          introReveal.kill();
+        });
+      }
 
       blocks.forEach((block, index) => {
         const blockRect = block.getBoundingClientRect();
@@ -376,15 +406,39 @@ export default function ScrollytellingLayout() {
 
       tl.to(container, { opacity: 1, scale: 1, duration: 1, ease: "back.out(1.7)" }, "-=1");
 
-      ScrollTrigger.create({
-        trigger: "#chord-sticky-col",
-        start: "top top+=80",
-        endTrigger: "#projects-section",
-        end: "bottom bottom",
-        pin: true,
-        pinSpacing: false,
+      const desktopMediaQuery = window.matchMedia("(min-width: 1024px)");
+      const pinCleanupFns: Array<() => void> = [];
+      const setupPinTrigger = () => {
+        pinCleanupFns.splice(0, pinCleanupFns.length).forEach((cleanup) => cleanup());
+
+        if (!desktopMediaQuery.matches) return;
+
+        const pinTrigger = ScrollTrigger.create({
+          trigger: "#chord-sticky-col",
+          start: "top top+=80",
+          endTrigger: "#projects-cards",
+          end: "top top+=80",
+          pin: true,
+          pinSpacing: false,
+        });
+        pinCleanupFns.push(() => pinTrigger.kill());
+      };
+
+      setupPinTrigger();
+      const handleViewportChange = () => setupPinTrigger();
+      desktopMediaQuery.addEventListener("change", handleViewportChange);
+      cleanupFns.push(() => {
+        desktopMediaQuery.removeEventListener("change", handleViewportChange);
+        pinCleanupFns.splice(0, pinCleanupFns.length).forEach((cleanup) => cleanup());
       });
     });
+
+    return () => {
+      isDisposed = true;
+      initialized.current = false;
+      cleanupFns.forEach((cleanup) => cleanup());
+      mountNode?.replaceChildren();
+    };
   }, []);
 
   return (
@@ -546,16 +600,16 @@ export default function ScrollytellingLayout() {
               </div>
               <h2 className="font-['Noto_Serif'] text-5xl font-bold tracking-tight">Projects</h2>
             </div>
-            <div className="ml-20">
+            <div className="ml-20" id="projects-cards">
               <div className="flex overflow-x-auto gap-8 pb-8 hide-scrollbar snap-x snap-mandatory">
                 {projects.map((project) => (
                   <div
                     key={project.id}
-                    className="min-w-[320px] md:min-w-[450px] snap-center bg-[#98f1fa]/20 p-8 rounded-xl border border-[#006f78]/10"
+                    className="min-w-[340px] md:min-w-[480px] snap-center bg-[#98f1fa]/20 p-8 rounded-xl border border-[#006f78]/10"
                   >
                     {project.imageUrl ? (
                       <div className="w-full h-48 relative rounded-lg overflow-hidden mb-6">
-                        <Image src={project.imageUrl} alt={project.title} fill sizes="(max-width: 768px) 100vw, 450px" quality={95} className="object-cover" />
+                        <Image src={project.imageUrl} alt={project.title} fill sizes="(max-width: 768px) 100vw, 450px" quality={95} className={`object-cover ${project.imageClassName ?? ""}`} />
                       </div>
                     ) : (
                       <div className="w-full h-48 bg-[#003c73]/10 rounded-lg mb-6 flex items-center justify-center">
@@ -565,6 +619,9 @@ export default function ScrollytellingLayout() {
                       </div>
                     )}
                     <h3 className="font-['Noto_Serif'] text-2xl mb-3">{project.title}</h3>
+                    <p className="font-['Inter'] text-sm text-[#424751]/85 leading-relaxed mb-4">
+                      {project.description}
+                    </p>
                     <ul className="space-y-2 font-['Inter'] text-sm text-[#424751] leading-relaxed mb-4">
                       {project.bullets.map((b, i) => (
                         <li key={i} className="relative pl-5 before:content-[''] before:absolute before:left-0 before:top-[0.55em] before:w-1.5 before:h-1.5 before:rounded-full before:bg-[#006f78]">
@@ -572,20 +629,21 @@ export default function ScrollytellingLayout() {
                         </li>
                       ))}
                     </ul>
-                    {project.link ? (
-                      <a
-                        href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs font-bold text-[#006f78] tracking-widest uppercase underline"
-                      >
-                        {project.tag}
-                      </a>
-                    ) : (
+                    <div className="flex flex-wrap items-center gap-4">
                       <span className="text-xs font-bold text-[#006f78] tracking-widest uppercase">
                         {project.tag}
                       </span>
-                    )}
+                      {project.link && (
+                        <a
+                          href={project.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs font-bold text-[#006f78] tracking-widest uppercase underline"
+                        >
+                          {project.linkLabel ?? "Live Demo"}
+                        </a>
+                      )}
+                    </div>
                   </div>
                 ))}
               </div>
