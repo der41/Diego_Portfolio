@@ -28,7 +28,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${notoSerif.variable} h-full`}>
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      className={`${inter.variable} ${notoSerif.variable} h-full`}
+    >
       <head>
         {/* Material Symbols — icon font, cannot use next/font/google */}
         {/* eslint-disable-next-line @next/next/no-page-custom-font */}
