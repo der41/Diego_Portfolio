@@ -17,9 +17,9 @@ const notoSerif = Noto_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Diego Rodriguez | Data Science & Economics",
+  title: "Diego Rodriguez | Data Scientist",
   description:
-    "Interdisciplinary portfolio spanning Economics, Statistics, Engineering, Computer Science, Communication, and Arts.",
+    "Interdisciplinary portfolio spanning Engineering, Computer Science, Economics, Statistics, Communication, and Arts.",
 };
 
 export default function RootLayout({
