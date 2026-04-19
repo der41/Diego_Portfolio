@@ -53,7 +53,10 @@ export default function HeroSection() {
             This is my Journey in{" "}
             <span className="text-[#003c73] italic">Six Disciplines.</span>
           </h2>
-          <p className="text-xl md:text-2xl text-[#424751] max-w-2xl leading-relaxed font-light">
+          <p
+            data-reveal
+            className="text-xl md:text-2xl text-[#424751] max-w-2xl leading-relaxed font-light"
+          >
             An interdisciplinary journey weaving through Economics, Statistics, Engineering,
             Computer Science, Communication, and the Arts to build intellectual clarity in a
             digital age.

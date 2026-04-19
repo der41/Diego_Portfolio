@@ -71,9 +71,12 @@ export default function Navigation() {
     <nav className="fixed top-0 w-full z-50 bg-[#faf8ff] shadow-[0px_20px_40px_rgba(25,27,33,0.04)]">
       <div className="flex justify-between items-center px-12 py-6 max-w-[1920px] mx-auto">
         {/* Wordmark */}
-        <div className="font-['Noto_Serif'] font-bold text-2xl tracking-tighter text-[#191b21]">
+        <Link
+          href="/"
+          className="font-['Noto_Serif'] font-bold text-2xl tracking-tighter text-[#191b21]"
+        >
           Diego Rodriguez
-        </div>
+        </Link>
 
         {/* Desktop links */}
         <div className="hidden md:flex gap-12 items-center">
@@ -90,12 +93,12 @@ export default function Navigation() {
         </div>
 
         {/* Connect CTA */}
-        <a
-          href="#contact-section"
+        <Link
+          href="/#contact-section"
           className="hidden md:inline-block bg-[#003c73] text-white px-8 py-2 text-sm font-medium tracking-wide transition-all hover:bg-[#00539c] rounded-lg"
         >
           Connect
-        </a>
+        </Link>
 
         {/* Mobile hamburger */}
         <button
@@ -111,7 +114,7 @@ export default function Navigation() {
       {menuOpen && (
         <div className="md:hidden bg-[#faf8ff] border-t border-[#c2c6d3]/30 px-12 py-6 flex flex-col gap-4">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.label}
               href={link.href}
               className={getLinkClassName(link.href)}
@@ -121,15 +124,15 @@ export default function Navigation() {
               }}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
-          <a
-            href="#contact-section"
+          <Link
+            href="/#contact-section"
             className="bg-[#003c73] text-white px-6 py-2 text-sm font-medium text-center rounded-lg"
             onClick={() => setMenuOpen(false)}
           >
             Connect
-          </a>
+          </Link>
         </div>
       )}
     </nav>
