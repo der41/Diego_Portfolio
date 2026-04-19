@@ -3,7 +3,11 @@ import path from "node:path";
 import matter from "gray-matter";
 import { remark } from "remark";
 import remarkGfm from "remark-gfm";
-import remarkHtml from "remark-html";
+import remarkMath from "remark-math";
+import remarkRehype from "remark-rehype";
+import rehypeRaw from "rehype-raw";
+import rehypeKatex from "rehype-katex";
+import rehypeStringify from "rehype-stringify";
 
 const POSTS_DIR = path.join(process.cwd(), "public", "posts");
 
@@ -93,6 +97,91 @@ export function getReadingTimeMin(markdown: string): number {
   return Math.max(1, Math.round(words / 200));
 }
 
+export function rewriteJekyllImages(markdown: string): string {
+  const figureRe = /\{%\s*include\s+figure\.liquid[^%]*?path=["']([^"']+)["'][^%]*?%\}/g;
+  return markdown
+    .replace(figureRe, (_m, p: string) => {
+      const src = p.startsWith("assets/img/")
+        ? `/images/${p.slice("assets/img/".length)}`
+        : p.startsWith("/")
+          ? p
+          : `/images/${p}`;
+      return `<img src="${src}" alt="" class="post-figure" loading="lazy" />`;
+    })
+    .replace(/(["'(])assets\/img\//g, "$1/images/");
+}
+
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+type NotebookCell = {
+  cell_type: "code" | "markdown" | string;
+  source: string | string[];
+  outputs?: Array<{
+    output_type?: string;
+    data?: Record<string, string | string[]>;
+    text?: string | string[];
+  }>;
+};
+
+function renderNotebook(nbPath: string): string {
+  let raw: string;
+  try {
+    raw = fs.readFileSync(nbPath, "utf-8");
+  } catch {
+    return "";
+  }
+  let nb: { cells?: NotebookCell[] };
+  try {
+    nb = JSON.parse(raw);
+  } catch {
+    return "";
+  }
+  const cells = nb.cells ?? [];
+  const parts: string[] = ['<div class="nb-notebook">'];
+  for (const cell of cells) {
+    const src = Array.isArray(cell.source) ? cell.source.join("") : cell.source ?? "";
+    if (cell.cell_type === "code") {
+      parts.push(
+        `<pre class="nb-input"><code class="language-python">${escapeHtml(src)}</code></pre>`
+      );
+      for (const out of cell.outputs ?? []) {
+        const data = out.data ?? {};
+        const html = data["text/html"];
+        const text = data["text/plain"] ?? out.text;
+        if (html) {
+          const body = Array.isArray(html) ? html.join("") : html;
+          parts.push(`<div class="nb-output nb-output-html">${body}</div>`);
+        } else if (text) {
+          const body = Array.isArray(text) ? text.join("") : text;
+          parts.push(`<pre class="nb-output nb-output-text">${escapeHtml(body)}</pre>`);
+        }
+      }
+    } else if (cell.cell_type === "markdown") {
+      parts.push(`<div class="nb-markdown">${src}</div>`);
+    }
+  }
+  parts.push("</div>");
+  return parts.join("\n");
+}
+
+export function rewriteJupyterBlocks(markdown: string): string {
+  const blockRe = /\{::nomarkdown\}[\s\S]*?\{:\/nomarkdown\}/g;
+  return markdown.replace(blockRe, (block) => {
+    const m = block.match(/([^\s'"`]+\.ipynb)/);
+    if (!m) return "";
+    const rel = m[1];
+    const nbPath = rel.startsWith("assets/")
+      ? path.join(process.cwd(), "public", rel.slice("assets/".length))
+      : path.join(process.cwd(), "public", rel);
+    return renderNotebook(nbPath);
+  });
+}
+
 function readFilenames(): string[] {
   return fs
     .readdirSync(POSTS_DIR)
@@ -132,6 +221,14 @@ export async function getPostBySlug(slug: string): Promise<PostContent | null> {
   const filename = readFilenames().find((f) => slugify(f) === slug);
   if (!filename) return null;
   const { meta, content } = parseFile(filename);
-  const processed = await remark().use(remarkGfm).use(remarkHtml).process(content);
+  const prepared = rewriteJekyllImages(rewriteJupyterBlocks(content));
+  const processed = await remark()
+    .use(remarkGfm)
+    .use(remarkMath, { singleDollarTextMath: false })
+    .use(remarkRehype, { allowDangerousHtml: true })
+    .use(rehypeRaw)
+    .use(rehypeKatex)
+    .use(rehypeStringify)
+    .process(prepared);
   return { meta, html: String(processed) };
 }

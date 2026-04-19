@@ -5,6 +5,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import TagChip from "@/components/blog/TagChip";
 import { getPostBySlug, getPostSlugs } from "@/lib/posts";
+import "katex/dist/katex.min.css";
 
 const DATE_FORMAT = new Intl.DateTimeFormat("en-US", {
   month: "long",

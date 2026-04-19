@@ -16,7 +16,7 @@ export default function Footer() {
           ))}
         </div>
         <div className="font-['Inter'] text-[10px] tracking-[0.2em] uppercase text-[#191b21]/40">
-          © 2026 Diego Rodriguez | The Digital Curator. All Data Visualized.
+          © 2026 Diego Rodriguez | A Data Science Portfolio.
         </div>
       </div>
     </footer>

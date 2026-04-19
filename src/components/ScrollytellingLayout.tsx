@@ -318,6 +318,26 @@ export default function ScrollytellingLayout() {
         });
       });
 
+      // ── Intro narrative reveal ───────────────────────────────────
+      const introTargets = document.querySelectorAll<HTMLElement>(
+        "#intro-narrative [data-reveal]"
+      );
+      if (introTargets.length) {
+        gsap.set(introTargets, { opacity: 0, y: 40 });
+        gsap.to(introTargets, {
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          ease: "power2.out",
+          stagger: 0.15,
+          scrollTrigger: {
+            trigger: "#intro-narrative",
+            start: "top 55%",
+            once: true,
+          },
+        });
+      }
+
       // ── GSAP Scroll Animations ────────────────────────────────────
       const container = document.getElementById("chord-container");
       const blocks = document.querySelectorAll<HTMLElement>(".discipline-block");
