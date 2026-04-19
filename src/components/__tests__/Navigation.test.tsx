@@ -1,31 +1,42 @@
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import Navigation from "../Navigation";
+
+vi.mock("next/navigation", () => ({
+  usePathname: () => "/",
+}));
 
 describe("Navigation", () => {
   it("renders the wordmark", () => {
     render(<Navigation />);
-    expect(screen.getByText("Diego Rodriguez")).toBeInTheDocument();
+    expect(screen.getAllByText("Diego Rodriguez").length).toBeGreaterThan(0);
   });
 
-  it("renders all section links", () => {
+  it("renders all section links including Blog", () => {
     render(<Navigation />);
     expect(screen.getAllByText("About").length).toBeGreaterThan(0);
     expect(screen.getAllByText("Education").length).toBeGreaterThan(0);
     expect(screen.getAllByText("Experience").length).toBeGreaterThan(0);
     expect(screen.getAllByText("Projects").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Blog").length).toBeGreaterThan(0);
   });
 
-  it("links point to correct section IDs", () => {
+  it("links point to absolute homepage anchors", () => {
     render(<Navigation />);
     const aboutLinks = screen.getAllByRole("link", { name: "About" });
-    expect(aboutLinks[0]).toHaveAttribute("href", "#about-section");
+    expect(aboutLinks[0]).toHaveAttribute("href", "/#about-section");
+  });
+
+  it("Blog link points to /blog", () => {
+    render(<Navigation />);
+    const blogLinks = screen.getAllByRole("link", { name: "Blog" });
+    expect(blogLinks[0]).toHaveAttribute("href", "/blog");
   });
 
   it("renders the Connect CTA", () => {
     render(<Navigation />);
     const connectLinks = screen.getAllByText("Connect");
     expect(connectLinks.length).toBeGreaterThan(0);
-    expect(connectLinks[0]).toHaveAttribute("href", "#contact-section");
+    expect(connectLinks[0]).toHaveAttribute("href", "/#contact-section");
   });
 });
